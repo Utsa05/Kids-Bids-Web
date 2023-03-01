@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:kids_bids/route.dart';
+import 'package:kids_bids/views/constants/color.dart';
 import 'package:kids_bids/views/constants/string.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,8 +21,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: appName,
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
+          useMaterial3: true,
+          primarySwatch: Colors.indigo,
+          textTheme: TextTheme(
+            bodySmall:
+                GoogleFonts.bubblegumSans(fontSize: 20, color: titleColor),
+            bodyMedium: GoogleFonts.bubblegumSans(
+                fontSize: 30, color: titleColor, fontWeight: FontWeight.w500),
+          )),
       initialRoute: initialRoute,
       getPages: AppRoute.routes(),
     );

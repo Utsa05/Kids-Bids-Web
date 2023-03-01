@@ -29,6 +29,7 @@ dev_dependencies:
   shimmer: ^2.0.0
   auto_size_text: ^3.0.0
   get: ^4.6.5
+  lottie: ^2.2.0
 
 
 
@@ -38,6 +39,10 @@ flutter:
       - assets/icon/
       - assets/logo/
       - assets/image/
+      - assets/items/
+      - assets/fruits/
+      - assets/shape/
+      - assets/lotties/
  
 
   
