@@ -1,13 +1,17 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kids_bids/route.dart';
 import 'package:kids_bids/views/constants/color.dart';
 import 'package:kids_bids/views/constants/string.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const MyApp());
 }
 

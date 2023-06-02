@@ -3,8 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:kids_bids/core/local_server.dart';
 import 'package:kids_bids/models/item.dart';
+import 'package:kids_bids/views/constants/color.dart';
+import 'package:kids_bids/views/constants/string.dart';
 import 'package:kids_bids/views/widgets/responsive.dart';
 import 'package:lottie/lottie.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -99,11 +102,11 @@ class _DesktopModeState extends State<DesktopMode> {
             height: 400.0,
             child: Stack(
               children: [
-                Image.asset(
-                  'assets/shape/chooieboard.png',
-                  width: size.width * 0.4,
-                  height: size.height * 0.48,
-                ),
+                // Image.asset(
+                //   'assets/shape/chooieboard.png',
+                //   width: size.width * 0.4,
+                //   height: size.height * 0.48,
+                // ),
                 Positioned(
                   top: -size.height * 0.1,
                   left: -size.width * 0.01,
@@ -113,28 +116,117 @@ class _DesktopModeState extends State<DesktopMode> {
                     height: size.height * 0.48,
                   ),
                 ),
-                Container(
-                    width: size.width * 0.8,
-                    margin: EdgeInsets.only(
-                        top: size.height * 0.21, left: size.width * 0.07),
-                    child: Text('Choose ${item.title} To Login')),
-                Container(
-                  height: 60.0,
-                  width: 100.0,
-                  margin: EdgeInsets.only(
-                      top: size.height * 0.35, left: size.width * 0.06),
-                  child: Image.asset(
-                    item.images[1].image,
+                Positioned(
+                  top: 160,
+                  left: 90,
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    height: 260,
+                    width: 320,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(width: 1, color: Colors.amber),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Colors.pink,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: const TextField(
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 20),
+                                hintText: "Enter Baby Name",
+                                hintStyle: TextStyle(color: Colors.white),
+                                border: InputBorder.none),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(15)),
+                          child: const TextField(
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 20),
+                                hintText: "Enter Baby Age",
+                                hintStyle: TextStyle(color: Colors.white),
+                                border: InputBorder.none),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 14,
+                        ),
+                        MaterialButton(
+                          color: Colors.indigo,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25)),
+                          onPressed: () {
+                            Get.toNamed(homeRoute);
+                          },
+                          child: const Text(
+                            "SignUp",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              "Already Have Account? ",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                            Text(
+                              "Login",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.pink,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                    height: 60.0,
-                    width: 100.0,
-                    margin: EdgeInsets.only(
-                        top: size.height * 0.35, left: size.width * 0.213),
-                    child: Image.asset(
-                      item.images[0].image,
-                    )),
+                )
+                // Container(
+                //     width: size.width * 0.8,
+                //     margin: EdgeInsets.only(
+                //         top: size.height * 0.21, left: size.width * 0.07),
+                //     child: Text('Choose ${item.title} To Login')),
+                // Container(
+                //   height: 60.0,
+                //   width: 100.0,
+                //   margin: EdgeInsets.only(
+                //       top: size.height * 0.35, left: size.width * 0.06),
+                //   child: Image.asset(
+                //     item.images[1].image,
+                //   ),
+                // ),
+                // Container(
+                //     height: 60.0,
+                //     width: 100.0,
+                //     margin: EdgeInsets.only(
+                //         top: size.height * 0.35, left: size.width * 0.213),
+                //     child: Image.asset(
+                //       item.images[0].image,
+                //     )),
               ],
             ),
           ),

@@ -1,13 +1,20 @@
-import 'dart:math';
+// ignore_for_file: depend_on_referenced_packages
 
+import 'dart:math';
+import 'package:kids_bids/models/banner.dart';
+import 'package:kids_bids/views/constants/string.dart';
+import 'dart:math' as math;
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:kids_bids/views/pages/game/game.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:kids_bids/core/local_server.dart';
 import 'package:kids_bids/models/item.dart';
 import 'package:kids_bids/views/constants/color.dart';
 import 'package:kids_bids/views/widgets/hover_item.dart';
 import 'package:kids_bids/views/widgets/responsive.dart';
 import 'package:lottie/lottie.dart';
-import 'package:lottie/lottie.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -98,20 +105,51 @@ class _DesktopModeState extends State<DesktopMode> {
                     ],
                   ),
                 ),
-                const HoverItem(child: TopItem()),
+                HoverItem(
+                    child: TopItem(
+                  tap: () {},
+                  title: "Quize",
+                  image: 'assets/icon/quize.png',
+                )),
                 const SizedBox(
                   width: 20.0,
                 ),
-                const HoverItem(child: TopItem()),
+                HoverItem(
+                    child: TopItem(
+                  tap: () {
+                    Get.toNamed(gameRoute);
+                  },
+                  title: "Game",
+                  image: "assets/icon/game.png",
+                )),
                 const SizedBox(
                   width: 20.0,
                 ),
-                const HoverItem(child: TopItem()),
-                const SizedBox(
-                  width: 20.0,
-                ),
-                const HoverItem(child: TopItem()),
+                HoverItem(
+                    child: TopItem(
+                  tap: () {
+                    Get.toNamed(videoRoute);
+                  },
+                  title: "Videos",
+                  image: "assets/icon/video.png",
+                )),
                 const Expanded(child: SizedBox()),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  width: 45.0,
+                  height: 45.0,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(width: 2.0, color: titleColor)),
+                  child: const Icon(
+                    Icons.logout_outlined,
+                    color: titleColor,
+                  ),
+                ),
+                const SizedBox(
+                  width: 50,
+                )
               ],
             ),
           ),
@@ -132,6 +170,19 @@ class Bord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dataMap = <String, double>{
+      "Quize": 5,
+      "Game": 5,
+      "Video": 5,
+      "Poem": 5,
+    };
+
+    final colorList = <Color>[
+      Colors.greenAccent,
+      Colors.red,
+      Colors.amber,
+      Colors.purple,
+    ];
     return Container(
       margin:
           EdgeInsets.only(left: size.width * 0.015, top: size.height * 0.152),
@@ -141,7 +192,95 @@ class Bord extends StatelessWidget {
       //color: Colors.blue.withOpacity(0.2),
       child: Row(
         children: [
-          const Expanded(child: SizedBox()),
+          Expanded(
+              child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                  right: 14,
+                ),
+                width: double.infinity,
+                height: 150.0,
+                child: Row(
+                  children: [
+                    Container(
+                      height: 130,
+                      width: 130,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage('assets/shape/emptyboard.png'))),
+                      child: Center(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "Tusday",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          Text(
+                            "5-30-2023",
+                            style: TextStyle(fontSize: 17),
+                          ),
+                        ],
+                      )),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      height: 130,
+                      width: 130,
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/shape/circle.png'))),
+                      child: const Center(child: Text("50%")),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SizedBox(
+                      height: 115,
+                      child: PieChart(
+                        chartLegendSpacing: 10,
+                        dataMap: dataMap,
+                        chartType: ChartType.disc,
+                        colorList: colorList,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(right: 20),
+                child: CarouselSlider(
+                  options: CarouselOptions(height: 200.0, autoPlay: true),
+                  items: LocalServer.getBanner().map((i) {
+                    BannerModel imageModel = i;
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          height: 200.0,
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage(imageModel.image),
+                                  fit: BoxFit.fill),
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: purpleColor,
+                              border:
+                                  Border.all(width: 2.0, color: amberColor)),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
+              )
+            ],
+          )),
           SizedBox(
             width: 350.0,
             height: size.height * 0.5,
@@ -150,23 +289,47 @@ class Bord extends StatelessWidget {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     HoverItem(
-                      child: Item(),
+                      child: Item(
+                        color: telColor,
+                        image: 'assets/icon/math.png',
+                        tap: () {
+                          Get.toNamed(mathRoute);
+                        },
+                        title: 'Math',
+                      ),
                     ),
                     HoverItem(
-                      child: Item(),
+                      child: Item(
+                        color: amberColor,
+                        image: 'assets/items/letter.png',
+                        tap: () {},
+                        title: 'Words',
+                      ),
                     ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     HoverItem(
-                      child: Item(),
+                      child: Item(
+                        color: titleColor,
+                        image: 'assets/icon/poem.png',
+                        tap: () {},
+                        title: 'Poems',
+                      ),
                     ),
                     HoverItem(
-                      child: Item(),
+                      child: Item(
+                        color: purpleColor,
+                        image: 'assets/icon/painting.png',
+                        tap: () {
+                          Get.toNamed(paintRoute);
+                        },
+                        title: 'Draw',
+                      ),
                     ),
                   ],
                 )
@@ -182,49 +345,61 @@ class Bord extends StatelessWidget {
 class Item extends StatelessWidget {
   const Item({
     super.key,
+    required this.title,
+    required this.image,
+    required this.tap,
+    required this.color,
   });
+  final String title;
+  final String image;
+  final Color color;
+  final GestureTapCallback tap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 165.0,
-      width: 165.0,
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: purpleColor,
-          border: Border.all(width: 2.0, color: amberColor)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/items/letter.png',
-            width: 130.0,
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const Expanded(child: SizedBox()),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Text(
-                "Word",
-                style: TextStyle(color: Colors.white),
-              ),
-              CircleAvatar(
-                backgroundColor: amberColor,
-                radius: 16.0,
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.white,
+    return GestureDetector(
+      onTap: tap,
+      child: Container(
+        height: 165.0,
+        width: 165.0,
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: color,
+            border: Border.all(width: 2.0, color: amberColor)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              image,
+              width: 130.0,
+              height: 60,
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            const Expanded(child: SizedBox()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(color: Colors.white),
                 ),
-              )
-            ],
-          )
-        ],
+                const CircleAvatar(
+                  backgroundColor: amberColor,
+                  radius: 16.0,
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -233,34 +408,44 @@ class Item extends StatelessWidget {
 class TopItem extends StatelessWidget {
   const TopItem({
     super.key,
+    required this.title,
+    required this.image,
+    required this.tap,
   });
+
+  final String title;
+  final String image;
+  final GestureTapCallback tap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10.0),
-      width: 160.0,
-      height: 65.0,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(width: 2.0, color: Colors.blue)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Quize",
-            style: TextStyle(color: Colors.black),
-          ),
-          const SizedBox(
-            width: 8.0,
-          ),
-          Image.asset(
-            'assets/items/letter.png',
-            width: 50.0,
-            fit: BoxFit.cover,
-          )
-        ],
+    return GestureDetector(
+      onTap: tap,
+      child: Container(
+        padding: const EdgeInsets.all(10.0),
+        width: 160.0,
+        height: 65.0,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(width: 2.0, color: Colors.blue)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(color: Colors.black),
+            ),
+            const SizedBox(
+              width: 8.0,
+            ),
+            Image.asset(
+              image,
+              width: 50.0,
+              fit: BoxFit.cover,
+            )
+          ],
+        ),
       ),
     );
   }
