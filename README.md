@@ -1,4 +1,5 @@
 # Kids Bids Flutter Project app and web
+Note: Some features are missing will adding all day by day
 
 ## App
 - Getx 
