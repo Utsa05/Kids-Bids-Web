@@ -3,6 +3,7 @@ Note: Some features are missing will adding all day by day
 
 ## App
 - Getx 
+- MVC
 - Responsive
 - Node Js
 ![Login Page (2)](https://github.com/Utsa05/Kids-Bids-App/assets/71923060/6df9d547-22e9-489e-9162-8691ef623f95)
